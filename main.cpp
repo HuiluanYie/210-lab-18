@@ -39,6 +39,8 @@ public:
     }
 
     //Function prototype
+    // constructor
+    Movie();
     // copy constructor
     Movie(const Movie&);
 
@@ -57,13 +59,31 @@ int main() {
     // declarations
     vector <Movie> movies;
     Movie temp_movie;
+    string t;
+    float r;
+    string c;
+
     // file input
     ifstream fin;
     fin.open("input.txt");
     if (fin.good()) {
+        getline(fin, t);
+        temp_movie.set_title(t);
+        while (fin >> r)
+        {
+            getline(fin, c);
+            temp_movie.adds_review_head(r, c);
+        }
+        movies.push_back(temp_movie);
+        
+        for (Movie m:movies)
+        {
+            /* code */
+        }
         
     } else
         cout << "File not found.\n";
+
         
     return 0;
 }
@@ -72,9 +92,8 @@ int main() {
 // constructor
 Movie::Movie()
 {
-    // copy over the title
     title = "";
-    ;
+    reviews = nullptr;
 }
 // copy constructor
 Movie::Movie(const Movie& other)

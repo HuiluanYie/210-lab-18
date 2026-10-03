@@ -36,6 +36,9 @@ public:
 
     // other methods
     void print() {
+        // print() prints out the movie's title, reveiws and average rating
+        // arguments: none(natually refers to the Movie object)
+        // returns: none
         cout << "\nMovie Title: " << title << endl;
 
         int count = 0;
@@ -51,7 +54,22 @@ public:
         cout << "\t> Average: " << rating_sum / count << endl << endl;
     }
 
-    void adds_review_head()
+    void adds_review_head(float r, string c)
+    {
+        // adds_review_head() adds a review (rating + comment) to the head of the list
+        // arguments: the rating, the comment
+        // returns: none
+        Review * new_rev = new Review;
+        new_rev->rating = r;
+        new_rev->comment = c;
+
+        if (!reviews) {
+            reviews = new_rev;
+        } else {
+            new_rev -> next = reviews;
+            reviews = new_rev;
+        }
+    }
 };
 
 //Function prototype

@@ -39,6 +39,7 @@ public:
     Movie(const Movie&);
 
     // destructor
+    ~Movie();
 
     // copy assignment operator
 
@@ -64,23 +65,43 @@ Movie::Movie(const Movie& other)
     title = other.title;
     Review* source = other.reviews;
     Review * r_ptr = reviews;
+    // go to the tail of the reviews linked list 
+    while (r_ptr != nullptr && r_ptr -> next != nullptr) {
+        r_ptr = r_ptr -> next;
+    }
     //copy over the reviews
     while (source)
     {
         Review * new_rev = new Review;
         new_rev->rating = source->rating;
         new_rev->comment = source->comment;
+
+        // add the new reweiw to the tail
         if (!r_ptr) {
-            r_ptr = new_rev;
+            reviews = new_rev;
         } 
         else {
-            new_rev -> next = r_ptr -> next;
             r_ptr -> next = new_rev;
+            r_ptr = new_rev;
         }
-
         source = source->next;
     }
 }
+
+// destructor
+Movie::~Movie(){
+    Review * current = reviews;
+    while (current) {
+        reviews = current -> next;
+        delete current;
+        current = reviews;
+    }
+    reviews = nullptr;
+}
+
+// copy assignment operator
+
+// other methods
 
 
 // other methods

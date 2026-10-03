@@ -37,9 +37,21 @@ public:
     // other methods
     void print() {
         cout << "\nMovie Title: " << title << endl;
-        
+
+        int count = 0;
+        Review * r_ptr = reviews;
+        float rating_sum = 0;
+        while (r_ptr)
+        {
+            count++;
+            cout << "\t> Review #" << count << ": " << r_ptr->rating << ": " << r_ptr->comment;
+            rating_sum += r_ptr->rating;
+            r_ptr = r_ptr->next;
+        }
+        cout << "\t> Average: " << rating_sum / count << endl << endl;
     }
 
+    void adds_review_head()
 };
 
 //Function prototype

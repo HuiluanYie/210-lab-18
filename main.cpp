@@ -16,6 +16,9 @@ class Movie {
 private:
     string title;
     Review * reviews;
+    
+    // helper functions
+    void Movie::copy_review(Review * source)
 
 public:
     // setter
@@ -42,11 +45,13 @@ public:
     ~Movie();
 
     // copy assignment operator
+    Movie& operator=(const Movie&);
 
     // other methods
     
     void print();
     void adds_review_head(float r, string c);
+
 
 };
 
@@ -65,27 +70,7 @@ Movie::Movie(const Movie& other)
     title = other.title;
     Review* source = other.reviews;
     Review * r_ptr = reviews;
-    // go to the tail of the reviews linked list 
-    while (r_ptr != nullptr && r_ptr -> next != nullptr) {
-        r_ptr = r_ptr -> next;
-    }
-    //copy over the reviews
-    while (source)
-    {
-        Review * new_rev = new Review;
-        new_rev->rating = source->rating;
-        new_rev->comment = source->comment;
-
-        // add the new reweiw to the tail
-        if (!r_ptr) {
-            reviews = new_rev;
-        } 
-        else {
-            r_ptr -> next = new_rev;
-            r_ptr = new_rev;
-        }
-        source = source->next;
-    }
+    
 }
 
 // destructor
@@ -100,8 +85,10 @@ Movie::~Movie(){
 }
 
 // copy assignment operator
+Movie& Movie::operator=(const Movie& other)
+{
 
-// other methods
+}
 
 
 // other methods
@@ -138,5 +125,27 @@ void Movie::adds_review_head(float r, string c)
     } else {
         new_rev -> next = reviews;
         reviews = new_rev;
+    }
+}
+
+void Movie::copy_review(Review * source)
+{
+    //copy over the reviews
+    while (source)
+    {
+        Review * r_ptr = reviews;
+        Review * new_rev = new Review;
+        new_rev->rating = source->rating;
+        new_rev->comment = source->comment;
+
+        // add the new reweiw to the tail
+        if (!r_ptr) {
+            reviews = new_rev;
+        } 
+        else {
+            r_ptr -> next = new_rev;
+            r_ptr = new_rev;
+        }
+        source = source->next;
     }
 }

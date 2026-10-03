@@ -16,9 +16,10 @@ class Movie {
 private:
     string title;
     Review * reviews;
-    
+
     // helper functions
-    void Movie::copy_review(Review * source)
+    void copy_review(Review *);
+    void clear_review();
 
 public:
     // setter
@@ -48,46 +49,52 @@ public:
     Movie& operator=(const Movie&);
 
     // other methods
-    
     void print();
     void adds_review_head(float r, string c);
-
-
 };
 
 int main() {
     // declarations
     vector <Movie> movies;
-    
+    Movie temp_movie;
+    // file input
+    ifstream fin;
+    fin.open("input.txt");
+    if (fin.good()) {
+        
+    } else
+        cout << "File not found.\n";
+        
     return 0;
 }
 
 //Function definition
+// constructor
+Movie::Movie()
+{
+    // copy over the title
+    title = "";
+    ;
+}
 // copy constructor
 Movie::Movie(const Movie& other)
 {
     // copy over the title
     title = other.title;
-    Review* source = other.reviews;
-    Review * r_ptr = reviews;
-    
+    copy_review(other.reviews);
 }
 
 // destructor
 Movie::~Movie(){
-    Review * current = reviews;
-    while (current) {
-        reviews = current -> next;
-        delete current;
-        current = reviews;
-    }
-    reviews = nullptr;
+    clear_review();
 }
 
 // copy assignment operator
 Movie& Movie::operator=(const Movie& other)
 {
-
+    title = other.title;
+    clear_review();
+    copy_review(other.reviews);
 }
 
 
@@ -128,9 +135,12 @@ void Movie::adds_review_head(float r, string c)
     }
 }
 
+// helper functions
 void Movie::copy_review(Review * source)
 {
-    //copy over the reviews
+    // copy_review() copy over the reviews from a review source
+    // arguments: a pinter to the reweiw source
+    // returns: none
     while (source)
     {
         Review * r_ptr = reviews;
@@ -148,4 +158,14 @@ void Movie::copy_review(Review * source)
         }
         source = source->next;
     }
+}
+
+void Movie::clear_review(){
+    Review * current = reviews;
+    while (current) {
+        reviews = current -> next;
+        delete current;
+        current = reviews;
+    }
+    reviews = nullptr;
 }

@@ -60,7 +60,26 @@ int main() {
 // copy constructor
 Movie::Movie(const Movie& other)
 {
-    
+    // copy over the title
+    title = other.title;
+    Review* source = other.reviews;
+    Review * r_ptr = reviews;
+    //copy over the reviews
+    while (source)
+    {
+        Review * new_rev = new Review;
+        new_rev->rating = source->rating;
+        new_rev->comment = source->comment;
+        if (!r_ptr) {
+            r_ptr = new_rev;
+        } 
+        else {
+            new_rev -> next = r_ptr -> next;
+            r_ptr -> next = new_rev;
+        }
+
+        source = source->next;
+    }
 }
 
 

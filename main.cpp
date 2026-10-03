@@ -67,23 +67,31 @@ int main() {
     ifstream fin;
     fin.open("input.txt");
     if (fin.good()) {
-        getline(fin, t);
-        temp_movie.set_title(t);
-        while (fin >> r)
+        do
         {
-            getline(fin, c);
-            temp_movie.adds_review_head(r, c);
-        }
-        movies.push_back(temp_movie);
-        
+            getline(fin, t);
+            if (t.empty())
+            {
+                break;
+            }
+            temp_movie.set_title(t);
+            while (fin >> r)
+            {
+                getline(fin, c);
+                temp_movie.adds_review_head(r, c);
+            }
+            movies.push_back(temp_movie);
+        } while (true);
+
+        fin.close();
+
         for (Movie m:movies)
         {
-            /* code */
+            m.print();
         }
         
     } else
         cout << "File not found.\n";
-
         
     return 0;
 }
@@ -111,9 +119,12 @@ Movie::~Movie(){
 // copy assignment operator
 Movie& Movie::operator=(const Movie& other)
 {
-    title = other.title;
-    clear_review();
-    copy_review(other.reviews);
+    if (this != &other) {
+        title = other.title;
+        clear_review();
+        copy_review(other.reviews);
+    }
+    return *this;
 }
 
 

@@ -4,7 +4,13 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include <iomanip>
+#include <ctime>
+#include <cstdlib>
 using namespace std;
+
+const int MAX = 50, MIN = 10;
+const float D = 10;
 
 struct Review {
     float rating;
@@ -62,6 +68,7 @@ int main() {
     string t;
     float r;
     string c;
+    srand(time(0));
 
     // file input
     ifstream fin;
@@ -70,21 +77,24 @@ int main() {
         do
         {
             getline(fin, t);
+            if (t.empty())
+            {
+                break;
+            }
             temp_movie.set_title(t);
 
-            do
+            while (getline(fin, c) && !c.empty()) 
             {
-                getline(fin, c);
-                r = 
+                r = (rand() % (MAX - MIN + 1) + MIN) / D;
                 temp_movie.adds_review_head(r, c);
-            } while (true);
+            }
 
-    
             movies.push_back(temp_movie);
         } while (true);
 
         fin.close();
 
+        
         for (Movie m:movies)
         {
             m.print();

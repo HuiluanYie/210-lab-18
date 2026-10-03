@@ -18,7 +18,7 @@ private:
     Review * reviews;
 
     // helper functions
-    void copy_review(Review *);
+    void copy_review(const Review *);
     void clear_review();
 
 public:
@@ -51,7 +51,7 @@ public:
     Movie& operator=(const Movie&);
 
     // other methods
-    void print();
+    void print() const;
     void adds_review_head(float r, string c);
 };
 
@@ -129,7 +129,7 @@ Movie& Movie::operator=(const Movie& other)
 
 
 // other methods
-void Movie::print() {
+void Movie::print() const {
     // print() prints out the movie's title, reveiws and average rating
     // arguments: none(natually refers to the Movie object)
     // returns: none
@@ -166,17 +166,18 @@ void Movie::adds_review_head(float r, string c)
 }
 
 // helper functions
-void Movie::copy_review(Review * source)
+void Movie::copy_review(const Review * source)
 {
     // copy_review() copy over the reviews from a review source
     // arguments: a pinter to the reweiw source
     // returns: none
+    Review* r_ptr = nullptr;
     while (source)
     {
-        Review * r_ptr = reviews;
         Review * new_rev = new Review;
         new_rev->rating = source->rating;
         new_rev->comment = source->comment;
+        new_rev->next = nullptr;
 
         // add the new reweiw to the tail
         if (!r_ptr) {
@@ -184,8 +185,8 @@ void Movie::copy_review(Review * source)
         } 
         else {
             r_ptr -> next = new_rev;
-            r_ptr = new_rev;
         }
+        r_ptr = new_rev;
         source = source->next;
     }
 }

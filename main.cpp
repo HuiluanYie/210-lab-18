@@ -64,7 +64,6 @@ public:
 int main() {
     // declarations
     vector <Movie> movies;
-    Movie temp_movie;
     string t;
     float r;
     string c;
@@ -74,12 +73,11 @@ int main() {
     ifstream fin;
     fin.open("input.txt");
     if (fin.good()) {
-        do
-        {
-            getline(fin, t);
-            if (t.empty())
-            {
-                break;
+        while (getline(fin, t)) {
+            Movie temp_movie;
+            // Ignore blank lines between movies.
+            if (t.empty()) {
+                continue;
             }
             temp_movie.set_title(t);
 
@@ -88,13 +86,12 @@ int main() {
                 r = (rand() % (MAX - MIN + 1) + MIN) / D;
                 temp_movie.adds_review_head(r, c);
             }
-
             movies.push_back(temp_movie);
-        } while (true);
+        }
 
         fin.close();
 
-        
+        cout << fixed << setprecision(1);
         for (Movie m:movies)
         {
             m.print();
@@ -150,7 +147,7 @@ void Movie::print() const {
     while (r_ptr)
     {
         count++;
-        cout << "\t> Review #" << count << ": " << r_ptr->rating << ": " << r_ptr->comment;
+        cout << "\t> Review #" << count << ": " << r_ptr->rating << ": " << r_ptr->comment << endl;
         rating_sum += r_ptr->rating;
         r_ptr = r_ptr->next;
     }

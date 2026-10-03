@@ -70,16 +70,16 @@ int main() {
         do
         {
             getline(fin, t);
-            if (t.empty())
-            {
-                break;
-            }
             temp_movie.set_title(t);
-            while (fin >> r)
+
+            do
             {
                 getline(fin, c);
+                r = 
                 temp_movie.adds_review_head(r, c);
-            }
+            } while (true);
+
+    
             movies.push_back(temp_movie);
         } while (true);
 
@@ -105,9 +105,8 @@ Movie::Movie()
 }
 // copy constructor
 Movie::Movie(const Movie& other)
+    : title(other.title), reviews(nullptr)
 {
-    // copy over the title
-    title = other.title;
     copy_review(other.reviews);
 }
 
